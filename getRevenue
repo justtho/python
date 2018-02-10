@@ -1,0 +1,15 @@
+ OrderItemsFile = open("/home/justycx201703/data/retail_db/order_items/part-00000")
+ OrderItemsRead = OrderItemsFile.read()
+ OrderItems = OrderItemsRead.splitlines()
+ 
+ OrderItemsFilter = filter(lambda rec: int(rec.split(",")[1]) == 68880, OrderItems)
+ >>> OrderItemsFilter
+['172189,68880,1014,3,149.94,49.98', '172190,68880,502,5,250.0,50.0', '172191,68880,1073,1,199.99,199.99', '172192,68880,1014,5,249.9,49.98', '172193,68880,1014,3,149.94,49.98']
+ 
+ OrderItemsMap = map(lambda rec: float(rec.split(",")[4]), OrderItemsFilter)
+ >>> OrderItemsMap
+ [149.94, 250.0, 199.99, 249.9, 149.94]
+ 
+ OrderItemsRevenue = reduce(lambda total, element: total+element, OrderItemsMap)
+ >>> OrderItemsRevenue
+ 999.77
