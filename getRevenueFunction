@@ -1,0 +1,20 @@
+import sys
+
+def getRevenueForOrderId(path, OrderId):
+  OrderItemsFile = open(path)
+  OrderItemsRead = OrderItemsFile.read()
+  OrderItems = OrderItemsRead.splitlines()
+  OrderItemsFilter = filter(lambda rec: int(rec.split(",")[1]) == OrderId, OrderItems)
+  OrderItemsMap = map(lambda rec: float(rec.split(",")[4]), OrderItemsFilter)
+  OrderItemsRevenue = reduce(lambda total, element: total+element, OrderItemsMap)
+  return OrderItemsRevenue
+
+path = sys.argv[1]
+OrderId = int(sys.argv[2])
+
+print(getRevenueForOrderId(path, OrderId))
+
+*******************************************;
+call this function at the prompt:
+
+python GetRevenueForOrderId.py /home/justycx201703/data/retail_db/order_items/part-00000 68880
